@@ -2,12 +2,11 @@ MIT License
 
 Copyright (c) 2026 TitanCSA
 
-This license applies to the user-mode source code, examples, build scripts,
-documentation and precompiled user-mode recovery binaries in this repository.
-It does not apply to the prebuilt kernel
-driver, driver catalogs, or INF files under InstallerUI/Package/Payload; those files are
-covered by licenses/BINARY-LICENSE.txt. Third-party names and projects retain their own
-licenses and trademarks.
+This license applies to the original public application, control SDK, installer
+source, build scripts and documentation in this repository. No driver source or
+driver package is included. The separate private UMDF display driver and future
+driver binaries have their own distribution terms and Microsoft MS-PL notices.
+Third-party names and projects retain their own licenses and trademarks.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
