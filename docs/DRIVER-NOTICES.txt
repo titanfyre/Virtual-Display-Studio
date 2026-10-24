@@ -1,0 +1,6 @@
+Virtual Display Studio's private driver is adapted in part from Microsoft Windows-driver-samples/video/IndirectDisplay.
+Copyright (c) Microsoft Corporation.
+Upstream project: https://github.com/microsoft/Windows-driver-samples
+Upstream license: Microsoft Public License (MS-PL), supplied with any binary driver distribution.
+
+The public application, SDK and installer source are original Titanfyre code under the repository MIT license. A driver signing request is not a Microsoft certification or endorsement. Microsoft signing and runtime validation are pending for this preview.

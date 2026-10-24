@@ -1,0 +1,11 @@
+/obj/
+/bin/
+/Dependencies/
+/.vs/
+*.user
+*.pdb
+*.zip
+*.dll
+*.cat
+*.sys
+*.cab
