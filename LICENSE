@@ -2,12 +2,6 @@ MIT License
 
 Copyright (c) 2026 TitanCSA
 
-This license applies to the original public application, control SDK, installer
-source, build scripts and documentation in this repository. No driver source or
-driver package is included. The separate private UMDF display driver and future
-driver binaries have their own distribution terms and Microsoft MS-PL notices.
-Third-party names and projects retain their own licenses and trademarks.
-
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
