@@ -1,4 +1,4 @@
-param([switch]$Asan)
+param([switch]$Asan,[string]$DriverPackageDirectory='')
 $ErrorActionPreference='Stop'
 $build=Join-Path $PSScriptRoot 'obj\Build'
 $arguments=@('-S',$PSScriptRoot,'-G','Visual Studio 17 2022','-A','x64',('-DDISPLAY_ASAN='+$(if($Asan){'ON'}else{'OFF'})))
@@ -11,6 +11,7 @@ if($Asan){
  $arguments+=@('-T',('version='+$compiler.Name))
 }
 $arguments+=@('-B',$build)
+if($DriverPackageDirectory){$arguments+=('-DDRIVER_PACKAGE_DIRECTORY='+[IO.Path]::GetFullPath($DriverPackageDirectory))}
 & cmake @arguments
 if($LASTEXITCODE){throw 'Configuration failed.'}
 $compile=@('--build',$build,'--config','Release')

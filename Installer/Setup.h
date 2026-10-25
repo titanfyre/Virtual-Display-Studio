@@ -7,5 +7,6 @@ unsigned Installed(DWORD* error=nullptr);
 Result Execute(bool install) noexcept;
 bool Restart() noexcept;
 bool PackageMatches(const std::wstring& path) noexcept;
+bool SignedPackageTrusted(const std::wstring& directory) noexcept;
 bool CatalogTrusted(const std::wstring& path) noexcept;
 }

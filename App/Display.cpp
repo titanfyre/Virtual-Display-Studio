@@ -44,9 +44,9 @@ DWORD VirtualDisplay::Execute(DisplayProtocol::Action action,DisplayProtocol::St
     }catch(...){return ERROR_NOT_ENOUGH_MEMORY;}
 }
 std::wstring VirtualDisplay::Error(DWORD error){
-    if(error==ERROR_FILE_NOT_FOUND)return L"The signed display driver is not installed. See the installation instructions.";
+    if(error==ERROR_FILE_NOT_FOUND)return L"The display control interface is unavailable. Install the matching signed package and check the device status in Device Manager.";
     if(error==ERROR_ACCESS_DENIED)return L"Administrator access is required to control the virtual display.";
-    if(error==ERROR_NOT_READY)return L"The display adapter is still starting. Wait briefly and refresh.";
+    if(error==ERROR_NOT_READY)return L"The display adapter is not ready. Refresh status to read its initialization result.";
     if(error==ERROR_BUSY)return L"Another application owns the virtual display. Close it first.";
     wchar_t* text=nullptr;
     FormatMessageW(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_SYSTEM|FORMAT_MESSAGE_IGNORE_INSERTS,nullptr,error,0,reinterpret_cast<LPWSTR>(&text),0,nullptr);

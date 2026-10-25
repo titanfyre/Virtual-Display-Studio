@@ -5,6 +5,7 @@
 #include <wintrust.h>
 #include <softpub.h>
 #include <wincrypt.h>
+#include <mscat.h>
 #include <sddl.h>
 #include <vector>
 #include <filesystem>
@@ -30,6 +31,19 @@ bool MicrosoftCatalog(const fs::path& path){
     GUID action=WINTRUST_ACTION_GENERIC_VERIFY_V2;LONG status=WinVerifyTrust(nullptr,&action,&data);bool accepted=false;
     if(status==ERROR_SUCCESS){auto provider=WTHelperProvDataFromStateData(data.hWVTStateData);auto signer=provider?WTHelperGetProvSignerFromChain(provider,0,FALSE,0):nullptr;if(signer&&signer->csCertChain){wchar_t name[512]{};CertGetNameStringW(signer->pasCertChain[0].pCert,CERT_NAME_SIMPLE_DISPLAY_TYPE,0,nullptr,name,512);accepted=_wcsicmp(name,L"Microsoft Windows Hardware Compatibility Publisher")==0;}}
     data.dwStateAction=WTD_STATEACTION_CLOSE;WinVerifyTrust(nullptr,&action,&data);return accepted;
+}
+bool CatalogMember(const fs::path& directory,const wchar_t* name){
+    const auto path=directory/name;const auto catalog=directory/L"TitanVirtualDisplay.cat";
+    HANDLE file=CreateFileW(path.c_str(),GENERIC_READ,FILE_SHARE_READ,nullptr,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,nullptr);
+    if(file==INVALID_HANDLE_VALUE)return false;
+    struct File{HANDLE h;~File(){CloseHandle(h);}} close{file};
+    HCATADMIN admin=nullptr;if(!CryptCATAdminAcquireContext2(&admin,nullptr,L"SHA256",nullptr,0))return false;
+    struct Admin{HCATADMIN h;~Admin(){CryptCATAdminReleaseContext(h,0);}} release{admin};
+    BYTE hash[64]{};DWORD bytes=sizeof(hash);if(!CryptCATAdminCalcHashFromFileHandle2(admin,file,&bytes,hash,0)||bytes>64)return false;
+    wchar_t tag[129]{};const wchar_t* hex=L"0123456789ABCDEF";for(DWORD i=0;i<bytes;++i){tag[i*2]=hex[hash[i]>>4];tag[i*2+1]=hex[hash[i]&15];}
+    WINTRUST_CATALOG_INFO member{};member.cbStruct=sizeof(member);member.pcwszCatalogFilePath=catalog.c_str();member.pcwszMemberTag=tag;member.pcwszMemberFilePath=path.c_str();member.hMemberFile=file;member.pbCalculatedFileHash=hash;member.cbCalculatedFileHash=bytes;member.hCatAdmin=admin;
+    WINTRUST_DATA data{};data.cbStruct=sizeof(data);data.dwUIChoice=WTD_UI_NONE;data.dwUnionChoice=WTD_CHOICE_CATALOG;data.pCatalog=&member;data.dwStateAction=WTD_STATEACTION_VERIFY;data.dwProvFlags=WTD_CACHE_ONLY_URL_RETRIEVAL|WTD_REVOCATION_CHECK_NONE;
+    GUID action=WINTRUST_ACTION_GENERIC_VERIFY_V2;LONG result=WinVerifyTrust(nullptr,&action,&data);data.dwStateAction=WTD_STATEACTION_CLOSE;WinVerifyTrust(nullptr,&action,&data);return result==ERROR_SUCCESS;
 }
 bool OwnPackage(const fs::path& path){
     GUID classId{};wchar_t className[128]{};
@@ -63,7 +77,9 @@ struct Temporary {
 };
 Setup::Result Install(){
     Temporary temp;temp.Create();
-    if(!MicrosoftCatalog(temp.directory/L"TitanVirtualDisplay.cat"))return {ERROR_INVALID_IMAGE_HASH,false,L"Installation refused: the embedded driver catalog must have a trusted Microsoft Windows Hardware Compatibility Publisher signature. This preview has not completed Microsoft signing."};
+    if(!OwnPackage(temp.directory/L"TitanVirtualDisplay.inf"))return {ERROR_INVALID_DATA,false,L"Installation refused: the embedded package does not match the exact Titan Virtual Display identity."};
+    if(!CatalogMember(temp.directory,L"TitanVirtualDisplay.inf")||!CatalogMember(temp.directory,L"TitanVirtualDisplay.dll"))return {ERROR_INVALID_IMAGE_HASH,false,L"Installation refused: embedded INF or DLL is not a trusted member of its catalog."};
+    if(!MicrosoftCatalog(temp.directory/L"TitanVirtualDisplay.cat"))return {ERROR_INVALID_IMAGE_HASH,false,L"Installation refused: the embedded driver catalog must have a trusted Microsoft Windows Hardware Compatibility Publisher signature."};
     Devices devices;devices.h=SetupDiGetClassDevsW(&GUID_DEVCLASS_DISPLAY,nullptr,nullptr,0);Require(devices.h!=INVALID_HANDLE_VALUE);
     SP_DEVINFO_DATA selected{};selected.cbSize=sizeof(selected);bool found=false;
     for(DWORD i=0;;++i){SP_DEVINFO_DATA d{};d.cbSize=sizeof(d);if(!SetupDiEnumDeviceInfo(devices.h,i,&d)){if(GetLastError()!=ERROR_NO_MORE_ITEMS)Require(false);break;}if(Ours(devices.h,d)){selected=d;found=true;break;}}
@@ -118,6 +134,7 @@ Setup::Result Uninstall(){
 unsigned Setup::Installed(DWORD* error){if(error)*error=0;try{Devices devices;devices.h=SetupDiGetClassDevsW(&GUID_DEVCLASS_DISPLAY,nullptr,nullptr,DIGCF_PRESENT);if(devices.h==INVALID_HANDLE_VALUE){if(error)*error=GetLastError();return 0;}unsigned n=0;for(DWORD i=0;;++i){SP_DEVINFO_DATA d{};d.cbSize=sizeof(d);if(!SetupDiEnumDeviceInfo(devices.h,i,&d)){DWORD e=GetLastError();if(e!=ERROR_NO_MORE_ITEMS&&error)*error=e;break;}if(Ours(devices.h,d))++n;}return n;}catch(...){if(error)*error=ERROR_NOT_ENOUGH_MEMORY;return 0;}}
 bool Setup::PackageMatches(const std::wstring& path) noexcept{try{return OwnPackage(fs::path(path));}catch(...){return false;}}
 bool Setup::CatalogTrusted(const std::wstring& path) noexcept{try{return MicrosoftCatalog(fs::path(path));}catch(...){return false;}}
+bool Setup::SignedPackageTrusted(const std::wstring& directory) noexcept{try{fs::path p=directory;return OwnPackage(p/L"TitanVirtualDisplay.inf")&&MicrosoftCatalog(p/L"TitanVirtualDisplay.cat")&&CatalogMember(p,L"TitanVirtualDisplay.inf")&&CatalogMember(p,L"TitanVirtualDisplay.dll");}catch(...){return false;}}
 Setup::Result Setup::Execute(bool install) noexcept {
     HANDLE mutex=nullptr;
     try {

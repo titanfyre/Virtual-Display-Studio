@@ -23,7 +23,7 @@ void DrawScene(HDC dc,const RECT& r){
     Text(dc,52,142,r.right-48,172,status,bodyFont,Ink);
     Text(dc,52,185,r.right-52,236,detail,smallFont,Muted);
     Text(dc,52,246,r.right-48,274,L"1920 x 1080     /     60 Hz     /     One monitor",smallFont,Ink);
-    Text(dc,32,391,r.right-32,448,L"Signing pending: install only the Microsoft-signed package after it is published.\nNo desktop images are recorded or transmitted.",smallFont,Muted);
+    Text(dc,32,391,r.right-32,448,L"Live control requires the matching Microsoft-signed driver package.\nNo desktop images are recorded or transmitted.",smallFont,Muted);
 }
 bool RenderPreview(){
     Gdiplus::GdiplusStartupInput input;ULONG_PTR token{};
