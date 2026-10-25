@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 cmake_policy(SET CMP0091 NEW)
-project(VirtualDisplayStudio VERSION 0.1.1 LANGUAGES CXX)
+project(VirtualDisplayStudio VERSION 0.1.2 LANGUAGES CXX)
 if(NOT WIN32 OR NOT MSVC OR NOT CMAKE_SIZEOF_VOID_P EQUAL 8)
   message(FATAL_ERROR "Build with Visual Studio 2022 C++ tools on Windows x64.")
 endif()

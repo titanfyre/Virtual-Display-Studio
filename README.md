@@ -6,7 +6,7 @@ Connect one 1920 x 1080 virtual monitor at 60 Hz, inspect its state and disconne
 
 ![Virtual Display Studio](docs/app.png)
 
-**Status: application/SDK preview.** The matching Windows 10/11 driver package 0.1.1.0 is awaiting Microsoft signing and further runtime qualification. The release ZIP contains the application, SDK, console control and installer source; it does not include an unsigned driver or a setup executable. The application opens without changing your display configuration. No monitor is created at installation, Windows startup or normal application startup.
+**Microsoft-signed evaluation bundle.** Application 0.1.2 includes the Microsoft-signed driver 0.1.1.0 in self-contained UI/console installers, alongside the native application, control SDK and public user-mode sources. The application opens without changing your display configuration. No monitor is created at installation, Windows startup or normal application startup.
 
 ## What it does
 
@@ -20,7 +20,7 @@ The display implementation uses Microsoft's **UMDF indirect display driver model
 
 ## Install and use
 
-The following steps apply **after a Microsoft-signed driver release is available**:
+Extract the complete ZIP before starting setup:
 
 1. Download the Windows x64 package from [Releases](https://github.com/titanfyre/Virtual-Display-Studio/releases).
 2. Close other instances and run `VirtualDisplaySetup.exe` as administrator. Choose **Install / reinstall**.
@@ -77,9 +77,9 @@ Compile `App/Display.cpp` and link `setupapi.lib`. Use `Action::Query` for state
 
 ## Validation and limitations
 
-The x64 application and private driver compile with warnings as errors. Offline protocol/recovery checks, installer package identity/trust checks, tampered INF/DLL rejection, AddressSanitizer protocol checks, InfVerif and Inf2Cat checks pass. The corrected driver candidate passed 91 checks and 32 connect/disconnect cycles on Windows 10 build 19045 in normal mode and with UMDF Verifier enabled, including administrator access checks, ownership and abrupt process cleanup. These VM tests used a temporary lab signature, not a Microsoft signature for the new package. Final signed-package installation, Windows 11 and physical GPU rendering/suspend/resume qualification remain pending. See [validation details](docs/VALIDATION.md).
+The x64 application and private driver compile with warnings as errors. Offline protocol/recovery checks, installer package identity/trust checks, tampered INF/DLL rejection, AddressSanitizer protocol checks, InfVerif and Inf2Cat checks pass. The returned Microsoft-signed driver passed actual console installation, 91 checks and 32 connect/disconnect cycles on Windows 10 build 19045, normally and with UMDF Verifier enabled before loading. These checks cover administrator access, request validation, ownership, abrupt client exit, the exact installed DLL and uninstallation. Guest test-signing was disabled. Windows 11 and physical GPU rendering/suspend/resume qualification remain pending. See [validation details](docs/VALIDATION.md).
 
-This preview supports one 1080p60 SDR monitor. It has no HDR, variable refresh rate, streaming, audio transport or secure trial/licensing mechanism. There is no guarantee of a particular GPU, game, remote-desktop or capture application's behavior. Existing free virtual display drivers are available; this project focuses on an explicit integration interface and operator-controlled lifetime.
+This evaluation build supports one 1080p60 SDR monitor. It has no HDR, variable refresh rate, streaming, audio transport or secure trial/licensing mechanism. There is no guarantee of a particular GPU, game, remote-desktop or capture application's behavior. Existing free virtual display drivers are available; this project focuses on an explicit integration interface and operator-controlled lifetime.
 
 ## OEM integration and support
 
