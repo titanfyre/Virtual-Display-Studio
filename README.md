@@ -2,6 +2,17 @@
 
 **An explicit virtual monitor controller and C++ SDK for Windows OEM, headless and display test workflows.**
 
+<!-- full-version-contact:start -->
+> [!IMPORTANT]
+> **Full version / production availability**
+>
+> **Discord username: `titancsa`**
+>
+> Open Discord, choose **Friends > Add Friend**, enter **`titancsa`**, then send a direct message. Mention **Virtual Display Studio** and ask about **full-version availability, production licensing or a commercial integration**.
+>
+> Describe your intended use and target Windows versions so we can agree on the scope, availability and pricing.
+<!-- full-version-contact:end -->
+
 Connect one 1920 x 1080 virtual monitor at 60 Hz, inspect its state and disconnect it from a small native application. A console controller and single-file UI/console installer sources are included.
 
 ![Virtual Display Studio](docs/app.png)
