@@ -32,7 +32,7 @@ Initialization-only ETW diagnostics expose the failure stage and NTSTATUS when e
 
 ## Deployment boundaries
 
-Both setup executables verify the exact package identity, trusted Microsoft hardware-publisher catalog and INF/DLL catalog membership. They never enable test-signing or create a monitor automatically. Restart is requested only when Windows requires it. Driver source is private; upstream Microsoft MS-PL notices and the full license accompany the binary distribution.
+Both setup executables verify the exact package identity, trusted Microsoft hardware-publisher catalog and INF/DLL catalog membership. They never enable test-signing or create a monitor automatically. Restart is requested only when Windows requires it. Demo/evaluation driver source is documented in [driver/README.md](../driver/README.md); upstream Microsoft MS-PL notices and the full license accompany the binary distribution.
 
 Further qualification includes Windows 11, representative physical GPUs and display applications, device removal during active rendering, power transitions, graphics resets, update/rollback and extended workloads. A Microsoft signature is not WHQL certification, product endorsement or a guarantee of zero defects.
 

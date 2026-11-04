@@ -27,7 +27,7 @@ Connect one 1920 x 1080 virtual monitor at 60 Hz, inspect its state and disconne
 - A fixed, versioned C++ interface with driver state and actionable Windows errors.
 - No desktop recording, screenshot storage, remote-control service or network communication.
 
-The display implementation uses Microsoft's **UMDF indirect display driver model (IddCx)**. The private driver is a DLL hosted by Windows' driver framework alongside the system IndirectKmd component. It is a display driver, rather than an input filter. The application's source is public; driver source is private.
+The display implementation uses Microsoft's **UMDF indirect display driver model (IddCx)**. The evaluation driver is a DLL hosted by Windows' driver framework alongside the system IndirectKmd component. It is a display driver, rather than an input filter. The application's source is public; demo/evaluation driver source is documented in [driver/README.md](driver/README.md).
 
 ## Install and use
 
@@ -51,6 +51,12 @@ Run the console as administrator. `connect` waits for Enter, then closes the han
 Uninstall with the UI or `VirtualDisplaySetupConsole.exe /uninstall`. Enterprise setup supports `/install` and `/uninstall`; exit `3010` means a restart is required. The installer verifies the exact package identity, a trusted Microsoft hardware-publisher catalog and INF/DLL catalog membership before it attempts installation. No test-signing or Secure Boot setting is changed.
 
 ## Build the public application
+
+Demo/evaluation driver source is available; see [driver/README.md](driver/README.md) for
+build instructions and separate evaluation-source terms. Those terms apply to
+Titan-authored driver code. Third-party source licenses and existing application/SDK
+licenses remain applicable. Full/commercial implementation and private signing or
+activation material are excluded.
 
 Requires Windows x64, Visual Studio 2022 with C++ desktop tools, CMake 3.20+ and the Windows SDK.
 
@@ -98,6 +104,6 @@ For production integration, deployment assistance or a scoped development quote,
 
 ## License and responsible use
 
-Public application, control SDK and installer source: [MIT](LICENSE). Driver binaries have separate distribution terms and upstream Microsoft MS-PL notices. Microsoft signing is an integrity/distribution requirement; it does not constitute Microsoft endorsement or WHQL certification.
+Public application, control SDK and installer source: [MIT](LICENSE). Driver binaries have separate distribution terms and upstream Microsoft MS-PL notices. The published `driver/Driver/**` source files, including Titan changes in those files, retain MS-PL; see [the file-specific license map](driver/LICENSE-MAP.txt). Microsoft signing is an integrity/distribution requirement; it does not constitute Microsoft endorsement or WHQL certification.
 
 Use only on systems you own or administer with permission and comply with applicable laws and third-party terms. This project is intended for legitimate display, accessibility, OEM integration and testing. To the extent permitted by law, the author is not responsible for misuse, unlawful activity or resulting damage; the software is provided without warranty. This notice does not exclude rights or liability that law makes non-excludable.
