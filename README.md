@@ -2,17 +2,6 @@
 
 **An explicit virtual monitor controller and C++ SDK for Windows OEM, headless and display test workflows.**
 
-<!-- full-version-contact:start -->
-> [!IMPORTANT]
-> **Full version / production availability**
->
-> **Discord username: `titancsa`**
->
-> Open Discord, choose **Friends > Add Friend**, enter **`titancsa`**, then send a direct message. Mention **Virtual Display Studio** and ask about **full-version availability, production licensing or a commercial integration**.
->
-> Describe your intended use and target Windows versions so we can agree on the scope, availability and pricing.
-<!-- full-version-contact:end -->
-
 Connect one 1920 x 1080 virtual monitor at 60 Hz, inspect its state and disconnect it from a small native application. A console controller and single-file UI/console installer sources are included.
 
 ![Virtual Display Studio](docs/app.png)
@@ -107,3 +96,16 @@ For production integration, deployment assistance or a scoped development quote,
 Public application, control SDK and installer source: [MIT](LICENSE). Driver binaries have separate distribution terms and upstream Microsoft MS-PL notices. The published `driver/Driver/**` source files, including Titan changes in those files, retain MS-PL; see [the file-specific license map](driver/LICENSE-MAP.txt). Microsoft signing is an integrity/distribution requirement; it does not constitute Microsoft endorsement or WHQL certification.
 
 Use only on systems you own or administer with permission and comply with applicable laws and third-party terms. This project is intended for legitimate display, accessibility, OEM integration and testing. To the extent permitted by law, the author is not responsible for misuse, unlawful activity or resulting damage; the software is provided without warranty. This notice does not exclude rights or liability that law makes non-excludable.
+
+## Commercial integration and support
+
+<!-- full-version-contact:start -->
+> [!IMPORTANT]
+> **Full version / production availability**
+>
+> **Discord username: `titancsa`**
+>
+> Open Discord, choose **Friends > Add Friend**, enter **`titancsa`**, then send a direct message. Mention **Virtual Display Studio** and ask about **full-version availability, production licensing or a commercial integration**.
+>
+> Describe your intended use and target Windows versions so we can agree on the scope, availability and pricing.
+<!-- full-version-contact:end -->
