@@ -3,7 +3,11 @@
 <!-- simple-start:start -->
 Add or remove a virtual monitor on a supported Windows computer.
 
-**Start here.** Check the documented Windows version and start with the included monitor example.
+[First steps](#first-steps) · [Develop](#build-the-public-application) · [Maintain](https://github.com/TitanCSA/sdk-packages/blob/main/CONTRIBUTING.md)
+
+## First steps
+
+Check the documented Windows version and start with the included monitor example.
 <!-- simple-start:end -->
 
 <!-- full-version-contact:start -->
