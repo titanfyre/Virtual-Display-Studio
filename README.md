@@ -1,5 +1,11 @@
 # Virtual Display Studio
 
+<!-- simple-start:start -->
+Add or remove a virtual monitor on a supported Windows computer.
+
+**Start here.** Check the documented Windows version and start with the included monitor example.
+<!-- simple-start:end -->
+
 <!-- full-version-contact:start -->
 > [!IMPORTANT]
 > **Full version / production availability**
@@ -109,5 +115,3 @@ Public application, control SDK and installer source: [MIT](LICENSE). Driver bin
 Use only on systems you own or administer with permission and comply with applicable laws and third-party terms. This project is intended for legitimate display, accessibility, OEM integration and testing. To the extent permitted by law, the author is not responsible for misuse, unlawful activity or resulting damage; the software is provided without warranty. This notice does not exclude rights or liability that law makes non-excludable.
 
 ## Commercial integration and support
-
-
